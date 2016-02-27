@@ -1,8 +1,4 @@
-# Oracle Java 8 Dockerfile
-#
-# https://github.com/dockerfile/java
-# https://github.com/dockerfile/java/tree/master/oracle-java8
-#
+# Base container with java 8 and common tools
 
 # Pull base image.
 FROM ubuntu:15.10
@@ -12,6 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install Java.
 
 
+#install java 8
 RUN apt-get update \
     && apt-get install -y wget openssl ca-certificates \
     && cd /tmp \
@@ -25,3 +22,12 @@ RUN apt-get update \
     && update-alternatives --install /usr/bin/javac javac /opt/java/bin/javac 100
 
 ENV JAVA_HOME /opt/java
+
+# install common tools
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		ca-certificates \
+		curl \
+		wget \
+		unzip \
+		git \
+	&& rm -rf /var/lib/apt/lists/*
